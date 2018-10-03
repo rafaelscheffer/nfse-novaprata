@@ -13,8 +13,8 @@
     
   // criar uma pasta no servidor com o nome de cert	
   $pastacertificado = "cert";
-  $pfxCertPrivado = 'NEGOCIERSCLASSIFICADOSLTDAME.pfx';
-  $cert_password  = '745232';
+  $pfxCertPrivado = 'teste.pfx';
+  $cert_password  = '1111';
   
   if($NumeroNota != ''){
    $cancelarnota = $Criar->cancelarNfse($NumeroNota, $Cnpj, $InscricaoMunicipal, $CodigoMunicipio, $cert_password, $pfxCertPrivado, $pastacertificado);  
