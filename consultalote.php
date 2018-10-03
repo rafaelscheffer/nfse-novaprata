@@ -6,7 +6,7 @@
   require_once 'Nfse.php';
   $Criar = new Nfse();
   
-  $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
+  $RazaoSocial = 'Teste Ltda - ME';
   $Cnpj = '15454962000198';
   $InscricaoMunicipal = '32106042';
   $protocolo = '15454962000198000000005';
