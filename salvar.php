@@ -7,7 +7,7 @@
  $Cnpj = '15454962000198';
  $InscricaoMunicipal = '32106042';
  $CodigoMunicipioEmpresa = '4313300';
- $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
+ $RazaoSocial = 'Teste Ltda - ME';
   
  $retorno=str_replace('&lt;','<',$retorno);
  $retorno=str_replace('&gt;','>',$retorno);
