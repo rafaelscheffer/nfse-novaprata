@@ -8,7 +8,7 @@
   $Cnpj = '15454962000198';
   $InscricaoMunicipal = '32106042';
   $CodigoMunicipioEmpresa = '4313300';
-  $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
+  $RazaoSocial = 'Teste Ltda - ME';
   $Valorservico = '110.00';
   
   //Criar a nfse nova
