@@ -18,7 +18,7 @@
   $Cnpj = '15454962000198';
   $InscricaoMunicipal = '32106042';
   $CodigoMunicipioEmpresa = '4313300';
-  $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
+  $RazaoSocial = 'Teste Ltda - ME';
   $Valorservico = '110.00';
   
   // DADOS DO CLIENTE //
@@ -60,8 +60,8 @@
   
   // criar uma pasta no servidor com o nome de cert
   $pastacertificado = "cert";
-  $pfxCertPrivado = 'NEGOCIERSCLASSIFICADOSLTDAME.pfx';
-  $cert_password  = '745232';
+  $pfxCertPrivado = 'teste.pfx';
+  $cert_password  = '1111';
   
   
   if($NumeroNota != '' and $NumeroLote != '' and $NumeroRPS != ''){
