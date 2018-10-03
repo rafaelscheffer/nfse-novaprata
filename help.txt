@@ -1,0 +1,23 @@
+O Banco de dados que eu usei as tabelas estão no arquivo bancotestenfse.sql
+e o arquivo que faz a conexão com o banco de dados está junto na classe Nfse.php é o Dados.php é só alterar este arquivo que vai funcionar o banco!
+
+********************* OBSERVAÇÃO **************************
+CPF, CNPJ tudo sem formatação só numero
+O Certificado está numa pasta chamada cert
+se for salvar o certificado e a senha em uma tabela no banco salve só o nome do arquivo.pfx e a senha
+a pasta não precisa ele já pega pelo diretorio, tem q cuidar aonde vai estar a pasta porque senão ele não vai funcionar a assinatura digital da nota.
+
+Testa antes em ambiente de teste depois e só colocar os links abaixo.
+
+No arquivo Nfse.php tem as variaveis globais estes links são para teste
+public $urlenvio='http://homologaprata.nfse-tecnos.com.br:9091';
+public $urlcancelar='http://homologaprata.nfse-tecnos.com.br:9098';
+public $urlconsulta='http://novaprata.nfse-tecnos.com.br:9084';
+public $consultalote='http://homologaprata.nfse-tecnos.com.br:9097';
+
+Quando for para produção tem que trocar para estes 
+
+public $urlenvio='http://novaprata.nfse-tecnos.com.br:9091';
+public $urlcancelar='http://novaprata.nfse-tecnos.com.br:9098';
+public $urlconsulta='http://novaprata.nfse-tecnos.com.br:9084';
+public $consultalote='http://novaprata.nfse-tecnos.com.br:9097';
