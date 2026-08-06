@@ -1,5 +1,8 @@
 <?php
-require_once 'Dados.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+use NovaPrata\Nfse\Config\Config;
+
 class Nfse {
 
 public $nfsexml='';
@@ -12,11 +15,20 @@ public $certKEY='';
 public $certName='';
 public $pastacert='';
 public $pfxTimestamp='';
-public $urlenvio='http://homologaprata.nfse-tecnos.com.br:9091';
-public $urlcancelar='http://homologaprata.nfse-tecnos.com.br:9098';
-public $urlconsulta='http://novaprata.nfse-tecnos.com.br:9084';
-public $consultalote='http://homologaprata.nfse-tecnos.com.br:9097';
- 
+public $urlenvio;
+public $urlcancelar;
+public $urlconsulta;
+public $consultalote;
+protected $config;
+
+public function __construct(?Config $config = null){
+    $this->config = $config ?? Config::fromEnvironment();
+    $this->urlenvio = $this->config->nfseUrlEnvio();
+    $this->urlcancelar = $this->config->nfseUrlCancelar();
+    $this->urlconsulta = $this->config->nfseUrlConsulta();
+    $this->consultalote = $this->config->nfseUrlConsultaLote();
+}
+
 public function criarNfse($NumeroNota, $NumeroLote, $NumeroRPS, $Cnpj, $InscricaoMunicipal, $RazaoSocial, $Valorservico, $opcao, $Cnpjcpf, $Endereco, $Numero, $Bairro, $Cepcliente, $CodigoMunicipioCliente, $Telefone, $Email, $TipoNota, $CodigoCnae, $Aliquota, $Descricao, $Nome, $FormaPagamento, $NumeroParcelas, $CodigoMunicipioEmpresa, $UFCliente, $data, $ano, $pastacertificado, $pfxCertPrivado, $cert_password){	 
 // pega dados certificado
 $this->baseCerts($cert_password, $CodigoMunicipioEmpresa, $pfxCertPrivado, $pastacertificado);
@@ -899,8 +911,7 @@ public function retira($string){
 
 
 public function listUltimaNota(){
-        $Conexao = NAMEDB.':host='.HOST.';dbname='.BASE;
-        $Conecta = new PDO($Conexao, USER, PASS);
+        $Conecta = new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
         $sqlListUsuarioAll = "SELECT * FROM itensnfse order by id asc";
         try{
             $queryListUsuarioAll = $Conecta->prepare($sqlListUsuarioAll);
@@ -913,8 +924,7 @@ public function listUltimaNota(){
 }
 
 public function listNotas(){
-        $Conexao = NAMEDB.':host='.HOST.';dbname='.BASE;
-        $Conecta = new PDO($Conexao, USER, PASS);
+        $Conecta = new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
         $sqlListUsuarioAll = "SELECT * FROM nfse order by id desc";
         try{
             $queryListUsuarioAll = $Conecta->prepare($sqlListUsuarioAll);
@@ -927,8 +937,7 @@ public function listNotas(){
 }
 
 public function cadastrarNfseBanco($numeronota,$numerolote,$numerorps,$protocolo,$linknota,$codigoverificacao){
-    $Conexao = NAMEDB.':host='.HOST.';dbname='.BASE;
-    $Conecta = new PDO($Conexao, USER, PASS);
+    $Conecta = new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
 	
 	$sqlCreateUsuarioP1 = "INSERT INTO itensnfse VALUES ('0','$numeronota','$numerolote','$numerorps')"; 
     $queryCreateUsuarioP1 = $Conecta->prepare($sqlCreateUsuarioP1);
@@ -948,8 +957,7 @@ public function cadastrarNfseBanco($numeronota,$numerolote,$numerorps,$protocolo
 
 
 public function deletaNfseBanco($cod){
-        $Conexao = NAMEDB.':host='.HOST.';dbname='.BASE;
-        $Conecta = new PDO($Conexao, USER, PASS);
+        $Conecta = new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
         $sqlDeleteUsuario = "DELETE FROM nfse WHERE numeronota=".intval($cod);
         try{
             $queryDeleteUsuario = $Conecta->prepare($sqlDeleteUsuario);
