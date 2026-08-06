@@ -1,0 +1,15 @@
+# Certificado digital (PFX e PEM derivados) - nunca versionar material criptografico real
+cert/*.pfx
+cert/*.pem
+!cert/.gitkeep
+
+# Dependencias e configuracao local
+/vendor/
+.env
+.env.local
+
+# Artefatos de IDE e SO
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
