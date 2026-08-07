@@ -6,6 +6,7 @@ namespace NovaPrata\Nfse\Repositories;
 
 use NovaPrata\Nfse\Config\Config;
 use NovaPrata\Nfse\Contracts\NfseRepositoryInterface;
+use NovaPrata\Nfse\Exceptions\NfseException;
 use PDO;
 use PDOException;
 
@@ -17,7 +18,10 @@ final class NfseRepository implements NfseRepositoryInterface
 
     private function connect(): PDO
     {
-        return new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
+        $pdo = new PDO($this->config->dbDsn(), $this->config->dbUsername(), $this->config->dbPassword());
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return $pdo;
     }
 
     public function listUltimaNota(): array
@@ -30,9 +34,10 @@ final class NfseRepository implements NfseRepositoryInterface
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
-            echo 'Erro ao listar os itens da nfse ' . $erro->getMessage();
-
-            return [];
+            throw new NfseException(
+                'Erro ao listar os itens da nfse: ' . $erro->getMessage(),
+                NfseException::STOP_CRITICAL
+            );
         }
     }
 
@@ -46,9 +51,10 @@ final class NfseRepository implements NfseRepositoryInterface
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
-            echo 'Erro ao listar as notas fiscais ' . $erro->getMessage();
-
-            return [];
+            throw new NfseException(
+                'Erro ao listar as notas fiscais: ' . $erro->getMessage(),
+                NfseException::STOP_CRITICAL
+            );
         }
     }
 
@@ -62,16 +68,16 @@ final class NfseRepository implements NfseRepositoryInterface
     ): void {
         $conecta = $this->connect();
 
-        $queryItens = $conecta->prepare(
-            "INSERT INTO itensnfse VALUES ('0', :numeronota, :numerolote, :numerorps)"
-        );
-        $queryItens->execute([
-            'numeronota' => $numeronota,
-            'numerolote' => $numerolote,
-            'numerorps' => $numerorps,
-        ]);
-
         try {
+            $queryItens = $conecta->prepare(
+                "INSERT INTO itensnfse VALUES ('0', :numeronota, :numerolote, :numerorps)"
+            );
+            $queryItens->execute([
+                'numeronota' => $numeronota,
+                'numerolote' => $numerolote,
+                'numerorps' => $numerorps,
+            ]);
+
             $queryNfse = $conecta->prepare(
                 "INSERT INTO nfse VALUES ('0', :numeronota, :numerolote, :numerorps, :protocolo, :linknota, :codigoverificacao)"
             );
@@ -84,7 +90,7 @@ final class NfseRepository implements NfseRepositoryInterface
                 'codigoverificacao' => $codigoverificacao,
             ]);
         } catch (PDOException $erro) {
-            echo 'Erro ao cadastrar a nfse ' . $erro->getMessage();
+            throw new NfseException('Erro ao cadastrar a nfse: ' . $erro->getMessage(), NfseException::STOP_CRITICAL);
         }
     }
 
@@ -95,7 +101,7 @@ final class NfseRepository implements NfseRepositoryInterface
             $query = $conecta->prepare("DELETE FROM nfse WHERE numeronota = :numeronota");
             $query->execute(['numeronota' => (int) $cod]);
         } catch (PDOException $erro) {
-            echo 'Erro ao deletar a nfse ' . $erro->getMessage();
+            throw new NfseException('Erro ao deletar a nfse: ' . $erro->getMessage(), NfseException::STOP_CRITICAL);
         }
     }
 }
