@@ -1,23 +1,23 @@
-O Banco de dados que eu usei as tabelas estão no arquivo bancotestenfse.sql
-e o arquivo que faz a conexão com o banco de dados está junto na classe Nfse.php é o Dados.php é só alterar este arquivo que vai funcionar o banco!
+Este arquivo resume observações rápidas de uso. Para instalação, configuração
+via .env e arquitetura completa, veja README.md.
 
 ********************* OBSERVAÇÃO **************************
-CPF, CNPJ tudo sem formatação só numero
-O Certificado está numa pasta chamada cert
-se for salvar o certificado e a senha em uma tabela no banco salve só o nome do arquivo.pfx e a senha
-a pasta não precisa ele já pega pelo diretorio, tem q cuidar aonde vai estar a pasta porque senão ele não vai funcionar a assinatura digital da nota.
+CPF, CNPJ: sempre sem formatação, só número.
 
-Testa antes em ambiente de teste depois e só colocar os links abaixo.
+O certificado digital (.pfx) fica na pasta apontada por NFSE_CERT_PATH (padrão
+"cert", ver .env.example). Essa pasta precisa ter permissão de escrita: na
+primeira assinatura os arquivos .pem são derivados do .pfx e gravados ali,
+para reaproveitar até o certificado vencer. Se salvar o certificado e a senha
+em uma tabela no banco, salve só o nome do arquivo .pfx e a senha - a pasta em
+si já vem da configuração, não precisa ser salva.
 
-No arquivo Nfse.php tem as variaveis globais estes links são para teste
-public $urlenvio='http://homologaprata.nfse-tecnos.com.br:9091';
-public $urlcancelar='http://homologaprata.nfse-tecnos.com.br:9098';
-public $urlconsulta='http://novaprata.nfse-tecnos.com.br:9084';
-public $consultalote='http://homologaprata.nfse-tecnos.com.br:9097';
+Teste em ambiente de homologação antes de ir para produção: a troca é feita
+pela variável NFSE_AMBIENTE no .env (valores "homologacao" ou "producao"), não
+mais editando URLs no código. As URLs de cada ambiente também ficam no .env
+(NFSE_URL_ENVIO_HOMOLOGACAO/PRODUCAO, NFSE_URL_CANCELAR_HOMOLOGACAO/PRODUCAO,
+NFSE_URL_CONSULTALOTE_HOMOLOGACAO/PRODUCAO); NFSE_URL_CONSULTA é a mesma nos
+dois ambientes.
 
-Quando for para produção tem que trocar para estes 
-
-public $urlenvio='http://novaprata.nfse-tecnos.com.br:9091';
-public $urlcancelar='http://novaprata.nfse-tecnos.com.br:9098';
-public $urlconsulta='http://novaprata.nfse-tecnos.com.br:9084';
-public $consultalote='http://novaprata.nfse-tecnos.com.br:9097';
+O schema do banco de dados usado por src/Repositories/NfseRepository.php tem
+as tabelas "nfse" e "itensnfse" (colunas: numeronota, numerolote, numerorps,
+protocolo, linknota, codigoverificacao).
