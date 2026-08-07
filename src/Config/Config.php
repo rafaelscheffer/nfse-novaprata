@@ -124,7 +124,7 @@ final class Config
 
     public function nfseUrlConsulta(): string
     {
-        // Mesma URL em homologacao e producao, conforme documentado no help.txt original do projeto.
+        // Mesma URL em homologacao e producao (NFSE_URL_CONSULTA no .env).
         return $this->nfseUrlConsulta;
     }
 
