@@ -19,16 +19,16 @@ Exemplo de como gerar a nota fiscal:
   $data = date("Y-m-d")."T".date("H:i:s"); // data do envio
   $ano = date("Y"); // ano corrente do envio
   
-  $Cnpj = '15454962000198';
-  $InscricaoMunicipal = '32106042';
-  $CodigoMunicipioEmpresa = '4313300';
-  $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
+  $Cnpj = '66530585000160';
+  $InscricaoMunicipal = '00000000';
+  $CodigoMunicipioEmpresa = '0000000';
+  $RazaoSocial = 'Empresa Ltda - ME';
   $Valorservico = '110.00';
   
   // DADOS DO CLIENTE //
-  $Nome = 'Rafael Machado Scheffer';
+  $Nome = 'Teste Cliente';
   $opcao = 'CPF';  // Se for cnpj colocar CNPJ 
-  $Cnpjcpf = '06804127943';
+  $Cnpjcpf = '06804127942';
   $Endereco = 'RUA OSVALDO ARANHA';
   $Numero = '700';
   $Bairro = 'CENTRO';
@@ -80,10 +80,10 @@ Exemplo de como gerar a nota fiscal:
   require_once 'Nfse.php';
   $Criar = new Nfse();
   
-  $RazaoSocial = 'NegocieRS Classificados Ltda - ME';
-  $Cnpj = '15454962000198';
-  $InscricaoMunicipal = '32106042';
-  $protocolo = '15454962000198000000005';
+  $RazaoSocial = 'Empresa Ltda - ME';
+  $Cnpj = '66530585000160';
+  $InscricaoMunicipal = '00000000';
+  $protocolo = '66530585000160000000005';
   $consultalote = $Criar->consultalote($RazaoSocial, $Cnpj,$InscricaoMunicipal,$protocolo);  
   echo $Situacaolote = $consultalote['Situacao'].'<br>';
   // $Numero para consulta de nota
@@ -102,10 +102,10 @@ Exemplo de como gerar a nota fiscal:
   require_once 'Nfse.php';
   $Criar = new Nfse();
   
-  $Cnpj = '15454962000198';
-  $InscricaoMunicipal = '32106042';
+  $Cnpj = '66530585000160';
+  $InscricaoMunicipal = '00000000';
   $NumeroNota = $_GET['nrNota'];
-  $CodigoMunicipio = '4313300';
+  $CodigoMunicipio = '0000000';
     
   // criar uma pasta no servidor com o nome de cert	
   $pastacertificado = "cert";

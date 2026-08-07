@@ -22,6 +22,13 @@ final class Config
         private readonly string $nfseUrlConsulta,
         private readonly string $nfseUrlConsultaLoteHomologacao,
         private readonly string $nfseUrlConsultaLoteProducao,
+        private readonly string $providerCnpj,
+        private readonly string $providerInscricaoMunicipal,
+        private readonly string $providerCodigoMunicipio,
+        private readonly string $providerRazaoSocial,
+        private readonly string $certPath,
+        private readonly string $certFile,
+        private readonly string $certPassword,
     ) {
     }
 
@@ -68,6 +75,13 @@ final class Config
                 'NFSE_URL_CONSULTALOTE_PRODUCAO',
                 'http://novaprata.nfse-tecnos.com.br:9097'
             ),
+            providerCnpj: self::env('NFSE_PROVIDER_CNPJ', '66530585000160'),
+            providerInscricaoMunicipal: self::env('NFSE_PROVIDER_INSCRICAO_MUNICIPAL', '00000000'),
+            providerCodigoMunicipio: self::env('NFSE_PROVIDER_CODIGO_MUNICIPIO', '0000000'),
+            providerRazaoSocial: self::env('NFSE_PROVIDER_RAZAO_SOCIAL', 'Empresa Ltda - ME'),
+            certPath: self::env('NFSE_CERT_PATH', 'cert'),
+            certFile: self::env('NFSE_CERT_FILE', 'teste.pfx'),
+            certPassword: self::env('NFSE_CERT_PASSWORD', ''),
         );
     }
 
@@ -117,5 +131,40 @@ final class Config
     public function nfseUrlConsultaLote(): string
     {
         return $this->isProducao() ? $this->nfseUrlConsultaLoteProducao : $this->nfseUrlConsultaLoteHomologacao;
+    }
+
+    public function providerCnpj(): string
+    {
+        return $this->providerCnpj;
+    }
+
+    public function providerInscricaoMunicipal(): string
+    {
+        return $this->providerInscricaoMunicipal;
+    }
+
+    public function providerCodigoMunicipio(): string
+    {
+        return $this->providerCodigoMunicipio;
+    }
+
+    public function providerRazaoSocial(): string
+    {
+        return $this->providerRazaoSocial;
+    }
+
+    public function certPath(): string
+    {
+        return $this->certPath;
+    }
+
+    public function certFile(): string
+    {
+        return $this->certFile;
+    }
+
+    public function certPassword(): string
+    {
+        return $this->certPassword;
     }
 }
