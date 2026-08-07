@@ -220,8 +220,7 @@ final class NfseService
         $retorno = str_replace('&lt;', '<', $retorno);
         $retorno = str_replace('&gt;', '>', $retorno);
         $retorno = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $retorno);
-        $xmlresp = utf8_encode($retorno);
-        if ($xmlresp == '') {
+        if ($retorno == '') {
             echo 'erro';
         }
         //tratar dados de retorno
@@ -250,7 +249,11 @@ final class NfseService
             10
         );
 
-        $x = json_encode($response);
+        // json_encode() escapes real CRLF bytes into the literal 4-char sequence "\r\n",
+        // which is what explode() below splits on to isolate each line of the raw XML response.
+        // JSON_INVALID_UTF8_SUBSTITUTE avoids json_encode() returning false (and explode()
+        // throwing under strict_types) when the SOAP response isn't valid UTF-8.
+        $x = json_encode($response, JSON_INVALID_UTF8_SUBSTITUTE) ?: '';
         $array = explode('\r\n', $x);
 
         return preg_replace("/[^0-9]/", "", $array);
