@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace NovaPrata\Nfse\Infrastructure\Certificate;
 
+use NovaPrata\Nfse\Contracts\CertificateManagerInterface;
 use NovaPrata\Nfse\Exceptions\NfseException;
 
-final class CertificateManager
+final class CertificateManager implements CertificateManagerInterface
 {
     private string $senhaPfx = '';
     private string $certName = '';

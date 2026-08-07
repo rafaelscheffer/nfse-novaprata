@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace NovaPrata\Nfse\Repositories;
 
 use NovaPrata\Nfse\Config\Config;
+use NovaPrata\Nfse\Contracts\NfseRepositoryInterface;
 use PDO;
 use PDOException;
 
-final class NfseRepository
+final class NfseRepository implements NfseRepositoryInterface
 {
     public function __construct(private readonly Config $config)
     {

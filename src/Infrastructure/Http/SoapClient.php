@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace NovaPrata\Nfse\Infrastructure\Http;
 
+use NovaPrata\Nfse\Contracts\SoapClientInterface;
+
 /**
  * Cliente SOAP/cURL generico usado por todas as operacoes do webservice de NFS-e
  * (envio, cancelamento, consulta e consulta de lote).
  */
-final class SoapClient
+final class SoapClient implements SoapClientInterface
 {
     public function post(string $url, string $soapAction, string $envelope, int $timeoutSeconds): string
     {

@@ -6,6 +6,9 @@ namespace NovaPrata\Nfse\Application\Services;
 
 use DOMDocument;
 use NovaPrata\Nfse\Config\Config;
+use NovaPrata\Nfse\Contracts\CertificateManagerInterface;
+use NovaPrata\Nfse\Contracts\NfseRepositoryInterface;
+use NovaPrata\Nfse\Contracts\SoapClientInterface;
 use NovaPrata\Nfse\Helpers\IbgeCodeResolver;
 use NovaPrata\Nfse\Infrastructure\Certificate\CertificateManager;
 use NovaPrata\Nfse\Infrastructure\Http\SoapClient;
@@ -21,24 +24,28 @@ use NovaPrata\Nfse\Repositories\NfseRepository;
  */
 final class NfseService
 {
-    private readonly CertificateManager $certificateManager;
+    private readonly CertificateManagerInterface $certificateManager;
     private readonly XmlSigner $xmlSigner;
     private readonly RpsLoteXmlBuilder $rpsLoteXmlBuilder;
     private readonly CancelamentoXmlBuilder $cancelamentoXmlBuilder;
     private readonly ConsultaXmlBuilder $consultaXmlBuilder;
-    private readonly SoapClient $soapClient;
-    private readonly NfseRepository $repository;
+    private readonly SoapClientInterface $soapClient;
+    private readonly NfseRepositoryInterface $repository;
     private readonly IbgeCodeResolver $ibgeCodeResolver;
 
-    public function __construct(private readonly Config $config)
-    {
-        $this->certificateManager = new CertificateManager();
+    public function __construct(
+        private readonly Config $config,
+        ?CertificateManagerInterface $certificateManager = null,
+        ?SoapClientInterface $soapClient = null,
+        ?NfseRepositoryInterface $repository = null,
+    ) {
+        $this->certificateManager = $certificateManager ?? new CertificateManager();
         $this->xmlSigner = new XmlSigner();
         $this->rpsLoteXmlBuilder = new RpsLoteXmlBuilder();
         $this->cancelamentoXmlBuilder = new CancelamentoXmlBuilder();
         $this->consultaXmlBuilder = new ConsultaXmlBuilder();
-        $this->soapClient = new SoapClient();
-        $this->repository = new NfseRepository($config);
+        $this->soapClient = $soapClient ?? new SoapClient();
+        $this->repository = $repository ?? new NfseRepository($config);
         $this->ibgeCodeResolver = new IbgeCodeResolver();
     }
 
